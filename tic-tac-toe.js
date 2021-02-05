@@ -3,8 +3,6 @@ let svArr = ['', '', '',
     '', '', '',
     '', '', ''];
 let gameStatus = '';
-// const storageObj = { 'currentPlayerSymbol': currentPlayerSymbol, 'svArr': svArr, 'gameStatus': gameStatus };
-
 
 window.addEventListener('DOMContentLoaded', event => {
     createGameState();
@@ -111,6 +109,11 @@ let checkGameStatus = () => {
         let giveUp = document.getElementById('give-up');
         giveUp.disable = true;
     }
+
+    if (!svArr.includes('')) {
+        document.getElementById('game-status').innerHTML = 'Tied';
+    };
+
     saveGame();
 };
 
@@ -151,6 +154,10 @@ let createGameState = () => {
         }
     }
 
+    if (currentPlayerSymbol === 'x') {
+        currentPlayerSymbol = 'o';
+    } else {
+        currentPlayerSymbol = 'x';
+    };
+
 }
-
-
