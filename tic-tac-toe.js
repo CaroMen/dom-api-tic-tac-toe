@@ -3,10 +3,11 @@ let svArr = ['', '', '',
     '', '', '',
     '', '', ''];
 let gameStatus = '';
-const storageObj = { 'currentPlayerSymbol': currentPlayerSymbol, 'svArr': svArr, 'gameStatus': gameStatus };
+// const storageObj = { 'currentPlayerSymbol': currentPlayerSymbol, 'svArr': svArr, 'gameStatus': gameStatus };
 
 
 window.addEventListener('DOMContentLoaded', event => {
+    createGameState();
     let board = document.getElementById('tic-tac-toe-board');
 
     let newGame = document.getElementById('new-game');
@@ -69,8 +70,6 @@ window.addEventListener('DOMContentLoaded', event => {
         }
 
     });
-
-
 });
 
 
@@ -112,18 +111,46 @@ let checkGameStatus = () => {
         let giveUp = document.getElementById('give-up');
         giveUp.disable = true;
     }
-
+    saveGame();
 };
 
 let saveGame = () => {
 
-    for (let key in storageObj) {
-        let value = storageObj[key];
-        //stringify each key-value
-        //then localStorage.setItem each pair?
+    const storageObj = { currentPlayerSymbol, svArr, gameStatus };
 
+    window.localStorage.setItem('tic-tac-toe-game-state', JSON.stringify(storageObj));
+}
+
+let createGameState = () => {
+
+    let saveState = localStorage.getItem('tic-tac-toe-game-state');
+    if (!saveState) {
+        return;
     }
+    const state = JSON.parse(saveState);
+
+    svArr = state.svArr;
+    gameStatus = state.gameStatus;
+    currentPlayerSymbol = state.currentPlayerSymbol;
+
+    for (let i = 0; i < svArr.length; i++) {
+        let element = svArr[i];
+        if (element !== '') {
+            // do something
+            if (element === 'x') {
+                let img = document.createElement('img');
+                img.src = 'images/player-x.svg';
+                let div = document.getElementById(`square-${i}`);
+                div.appendChild(img);
+            } else {
+                let img = document.createElement('img');
+                img.src = 'images/player-o.svg';
+                let div = document.getElementById(`square-${i}`);
+                div.appendChild(img);
+            }
+        }
+    }
+
 }
 
 
-saveGame();
