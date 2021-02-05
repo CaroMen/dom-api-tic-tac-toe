@@ -3,11 +3,27 @@ let svArr = ['', '', '',
     '', '', '',
     '', '', ''];
 let gameStatus = '';
+const storageObj = { 'currentPlayerSymbol': currentPlayerSymbol, 'svArr': svArr, 'gameStatus': gameStatus };
+
 
 window.addEventListener('DOMContentLoaded', event => {
     let board = document.getElementById('tic-tac-toe-board');
 
     let newGame = document.getElementById('new-game');
+
+    let giveUp = document.getElementById('give-up');
+
+    giveUp.addEventListener('click', event => {
+        if (currentPlayerSymbol === 'x') {
+            gameStatus = 'O';
+        } else {
+            gameStatus = 'X';
+        }
+
+        document.getElementById('game-status').innerHTML = 'Winner: ' + gameStatus;
+        newGame.disabled = false;
+        giveUp.disabled = true;
+    });
 
     newGame.addEventListener('click', event => {
         currentPlayerSymbol = 'x';
@@ -19,6 +35,7 @@ window.addEventListener('DOMContentLoaded', event => {
             divSquare.innerHTML = '';
         }
         newGame.disabled = true;
+        giveUp.disabled = false;
     })
 
     board.addEventListener('click', event => {
@@ -92,6 +109,21 @@ let checkGameStatus = () => {
         document.getElementById('game-status').innerHTML = 'Winner: ' + gameStatus;
         let newGame = document.getElementById('new-game');
         newGame.disabled = false;
+        let giveUp = document.getElementById('give-up');
+        giveUp.disable = true;
     }
 
+};
+
+let saveGame = () => {
+
+    for (let key in storageObj) {
+        let value = storageObj[key];
+        //stringify each key-value
+        //then localStorage.setItem each pair?
+
+    }
 }
+
+
+saveGame();
